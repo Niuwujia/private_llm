@@ -5,19 +5,19 @@ import os
 parser = argparse.ArgumentParser()
 
 parser.add_argument(
-    "llama_dir",
-    required=True,
-    default=None,
-    help="root dir of llama weights, assuming weights are sharded into 3",
+    "--llama_dir",
+    default="../../Model/Llama-2-7b-chat-hf",
+    help="root dir of llama weights, assuming weights are sharded into 2",
 )
 parser.add_argument(
-    "pl_path",
-    required=True,
-    default=None,
+    "--pl_path",
+    default="./pl_gsm8k.bin",
     help="PrivateLoRA weights trained on GSM8K, download it from https://huggingface.co/wanglamao/PrivateLoRA_GSM8K",
 )
 parser.add_argument(
-    "output_dir", required=True, default=None, help="dir for prepared weights"
+    "--output_dir", 
+    default="./weights/", 
+    help="dir for prepared weights"
 )
 
 args = parser.parse_args()
@@ -27,18 +27,12 @@ if __name__ == "__main__":
     print("loading llama 7b weights...")
 
     sd7b = torch.load(
-        os.path.join(args.llama_dir, "pytorch_model-00001-of-00003.bin"),
+        os.path.join(args.llama_dir, "pytorch_model-00001-of-00002.bin"),
         map_location="cpu",
     )
     sd7b.update(
         torch.load(
-            os.path.join(args.llama_dir, "pytorch_model-00002-of-00003.bin"),
-            map_location="cpu",
-        )
-    )
-    sd7b.update(
-        torch.load(
-            os.path.join(args.llama_dir, "pytorch_model-00003-of-00003.bin"),
+            os.path.join(args.llama_dir, "pytorch_model-00002-of-00002.bin"),
             map_location="cpu",
         )
     )
