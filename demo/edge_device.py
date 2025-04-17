@@ -1,4 +1,4 @@
-from demo.model import PLLlamaConfig, LlamaForDevice
+from model import PLLlamaConfig, LlamaForDevice
 from pl_lib import CommProfiler
 import torch
 import logging
@@ -9,13 +9,13 @@ from transformers import AutoTokenizer
 parser = argparse.ArgumentParser()
 
 parser.add_argument(
-    "weight_path",
-    default=None,
+    "--weight_path",
+    default="weights/device/pytorch_model.bin",
     help="path to device model weight",
 )
 parser.add_argument(
-    "llama_path",
-    default=None,
+    "--llama_path",
+    default="../../Model/Llama-2-7b-chat-hf",
     help="root dir of huggingface llama model, should contain weight files and config",
 )
 parser.add_argument(
